@@ -7,24 +7,56 @@ import unittest
 from countNCoins.Coins import Coins
 
 
-class Test(unittest.TestCase):
+class coinsTest(unittest.TestCase):
 
 
     def setUp(self):
-        pass
-
-
+        # initialize coins object
+        self.coins = Coins(1.11, "Euro")
+ 
     def tearDown(self):
-        pass
+        # destroy object after use
+        self.coins = None
 
-
-    def testCountCoins(self):
-        testCoins = Coins(6.23, "Dollar")
-        nCoins = testCoins.countCoins()
+    def testCountCoinsDollar(self):
+        self.coins.setValueCurrency(6.23, "Dollar")   
+        given = self.coins.countCoins()
+        expected = 11   
+        self.assertEqual(given, expected, "Error in countCoins(): given {}, expected {}.".format(given, expected))
+        
+        self.coins.setValueCurrency(6.33, "Dollar")   
+        given = self.coins.countCoins()
         expected = 11
-        self.assertEqual(nCoins, expected, "Error in countCoins(): given {}, expected {}.".format(nCoins, expected))
+        self.assertEqual(given, expected, "Error in countCoins(): given {}, expected {}.".format(given, expected))
+        
+        self.coins.setValueCurrency(7.99, "Dollar")   
+        given = self.coins.countCoins()
+        expected = 15
+        self.assertEqual(given, expected, "Error in countCoins(): given {}, expected {}.".format(given, expected))
 
-
+    def testCountCoinsEuro(self):
+        self.coins.setValueCurrency(6.23, "Euro")
+        given = self.coins.countCoins()
+        expected = 6
+        self.assertEqual(given, expected, "Error in countCoins(): given {}, expected {}.".format(given, expected))
+        
+        self.coins.setValueCurrency(6.33, "Euro")
+        given = self.coins.countCoins()
+        expected = 7
+        self.assertEqual(given, expected, "Error in countCoins(): given {}, expected {}.".format(given, expected))
+        
+        self.coins.setValueCurrency(7.99, "Euro")
+        given = self.coins.countCoins()
+        expected = 10
+        self.assertEqual(given, expected, "Error in countCoins(): given {}, expected {}.".format(given, expected))
+        
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testCountCoins']
-    unittest.main()
+    # run the tests with finer level of control
+    # create test suite that runs all of the tests above
+    suite = unittest.TestLoader().loadTestsFromTestCase(coinsTest)    
+    unittest.TextTestRunner(verbosity=2).run(suite)
+
+
+
+
+

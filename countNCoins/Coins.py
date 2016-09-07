@@ -37,7 +37,11 @@ class Coins(object):
         self.currency = currency
         
     def setValue(self, value):
-        self.value = value
+        self.value = int(float(Decimal(value)) * 100)
+        
+    def setValueCurrency(self, value, currency):
+        self.value = int(float(Decimal(value)) * 100)
+        self.currency = currency
         
     def coinTypes(self):
         if self.currency is "Euro":
